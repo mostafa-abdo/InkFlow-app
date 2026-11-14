@@ -9,7 +9,7 @@ PDF annotation and fully offline storage — as a Tauri desktop app (React + Typ
 
 ![stack](https://img.shields.io/badge/stack-React%2019%20%C2%B7%20TypeScript%20%C2%B7%20Vite%20%C2%B7%20Tauri%202%20%C2%B7%20SQLite-7c6cf6)
 
-<p align="center"><img src="docs/screenshot.jpeg" alt="InkFlow — a pen stroke on a ruled page" width="640" /></p>
+<p align="center"><img src="docs/screenshot.png" alt="InkFlow — a pen stroke on a ruled page" width="640" /></p>
 
 ---
 

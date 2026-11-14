@@ -1,149 +1,418 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="InkFlow — offline, pressure-sensitive digital handwriting & note-taking app for graphics tablets. Open source." />
-<title>InkFlow — Digital Handwriting & Note-Taking</title>
-<link rel="icon" type="image/svg+xml" href="../public/favicon.svg" />
-<style>
-  :root{
-    --bg:#16141f; --panel:#1c1a28; --panel-2:#221f30; --elevated:#262335;
-    --border:#2e2b40; --text:#eceaf4; --text-2:#a9a6bd; --text-muted:#716e88;
-    --accent:#7c6cf6; --accent-2:#4f46e5; --success:#3ecf8e;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    font-family:"Inter","Segoe UI",system-ui,sans-serif;
-    background:var(--bg); color:var(--text); line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{ color:inherit; }
-  .container{ max-width:980px; margin:0 auto; padding:0 24px; }
-  header{
-    position:sticky; top:0; z-index:10; backdrop-filter:blur(12px);
-    background:rgba(22,20,31,.8); border-bottom:1px solid var(--border);
-  }
-  nav{ display:flex; align-items:center; justify-content:space-between; height:64px; }
-  .logo{ display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:-.02em; font-size:18px; }
-  .logo-dot{ width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,#7c6cf6,#4f46e5); display:flex;align-items:center;justify-content:center; }
-  .btn{
-    display:inline-flex;align-items:center;gap:8px;
-    background:var(--accent); color:#fff; text-decoration:none;
-    padding:10px 18px; border-radius:10px; font-weight:700; font-size:14px; border:0;cursor:pointer;
-    box-shadow:0 6px 20px -6px rgba(124,108,246,.55), inset 0 1px 0 rgba(255,255,255,.15);
-    transition:filter .15s ease, transform .15s ease;
-  }
-  .btn:hover{ filter:brightness(1.12); transform:translateY(-1px); }
-  .btn.secondary{ background:var(--panel-2); color:var(--text); box-shadow:none; border:1px solid var(--border); }
-  .hero{
-    padding:64px 0 40px; display:grid; grid-template-columns:1.1fr 1fr; gap:40px; align-items:center;
-  }
-  h1{ font-size:42px; line-height:1.08; letter-spacing:-.03em; font-weight:800; }
-  h1 .accent{ background:linear-gradient(135deg,#a89bff,#7c6cf6 60%,#4f46e5); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .lead{ margin-top:14px; font-size:16px; color:var(--text-2); max-width:46ch; }
-  .actions{ margin-top:26px; display:flex; gap:12px; flex-wrap:wrap; }
-  .badges{ margin-top:22px; display:flex; gap:14px; color:var(--text-muted); font-size:12px; }
-  .badges span{ display:flex;align-items:center;gap:6px; }
-  .badges span::before{ content:""; width:7px;height:7px;border-radius:50%; background:var(--success); display:inline-block; }
-  .shot{
-    border-radius:14px; border:1px solid var(--border); box-shadow:0 24px 70px rgba(0,0,0,.5);
-    background:var(--panel); overflow:hidden;
-  }
-  .shot img{ display:block; width:100%; height:auto; }
-  section{ padding:34px 0; border-top:1px solid var(--border); }
-  h2{ font-size:26px; letter-spacing:-.02em; margin-bottom:18px; }
-  .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-  .card{ background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:18px; }
-  .card h3{ font-size:15px; margin-bottom:6px; }
-  .card p{ font-size:13px; color:var(--text-2); }
-  .num{ color:var(--accent); font-weight:800; font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
-  .download{ background:linear-gradient(160deg, var(--panel-2), var(--panel)); border:1px solid var(--border); border-radius:16px; padding:28px; text-align:center; }
-  .download h3{ font-size:22px; margin-bottom:6px; }
-  .download p{ color:var(--text-2); margin-bottom:18px; font-size:14px; }
-  .note{ margin-top:12px; font-size:12px; color:var(--text-muted); }
-  footer{ border-top:1px solid var(--border); padding:24px 0; color:var(--text-muted); font-size:12px; text-align:center; }
-  code{ background:var(--elevated); padding:2px 6px; border-radius:5px; font-size:12px; }
-  @media (max-width:860px){
-    .hero{ grid-template-columns:1fr; padding-top:34px; }
-    h1{ font-size:32px; }
-    .grid{ grid-template-columns:1fr; }
-  }
-</style>
-</head>
-<body>
-<header>
-  <div class="container">
-    <nav>
-      <div class="logo">
-        <span class="logo-dot">
-          <svg width="14" height="14" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-            <path fill="url(#g)" d="M32 8c-9 11.5-15 19.6-15 28a15 15 0 0 0 30 0c0-8.4-6-16.5-15-28z"/>
-            <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dcd6ff"/></linearGradient></defs>
-          </svg>
-        </span>
-        InkFlow
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="InkFlow — offline, pressure-sensitive digital handwriting & note-taking app for graphics tablets. Open source."
+    />
+    <title>InkFlow — Digital Handwriting & Note-Taking</title>
+    <link rel="icon" type="image/svg+xml" href="../public/favicon.svg" />
+    <style>
+      :root {
+        --bg: #16141f;
+        --panel: #1c1a28;
+        --panel-2: #221f30;
+        --elevated: #262335;
+        --border: #2e2b40;
+        --text: #eceaf4;
+        --text-2: #a9a6bd;
+        --text-muted: #716e88;
+        --accent: #7c6cf6;
+        --accent-2: #4f46e5;
+        --success: #3ecf8e;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: inherit;
+      }
+      .container {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(12px);
+        background: rgba(22, 20, 31, 0.8);
+        border-bottom: 1px solid var(--border);
+      }
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        font-size: 18px;
+      }
+      .logo-dot {
+        width: 26px;
+        height: 26px;
+        border-radius: 7px;
+        background: linear-gradient(135deg, #7c6cf6, #4f46e5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--accent);
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 18px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 14px;
+        border: 0;
+        cursor: pointer;
+        box-shadow:
+          0 6px 20px -6px rgba(124, 108, 246, 0.55),
+          inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        transition:
+          filter 0.15s ease,
+          transform 0.15s ease;
+      }
+      .btn:hover {
+        filter: brightness(1.12);
+        transform: translateY(-1px);
+      }
+      .btn.secondary {
+        background: var(--panel-2);
+        color: var(--text);
+        box-shadow: none;
+        border: 1px solid var(--border);
+      }
+      .hero {
+        padding: 64px 0 40px;
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+      h1 {
+        font-size: 42px;
+        line-height: 1.08;
+        letter-spacing: -0.03em;
+        font-weight: 800;
+      }
+      h1 .accent {
+        background: linear-gradient(135deg, #a89bff, #7c6cf6 60%, #4f46e5);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .lead {
+        margin-top: 14px;
+        font-size: 16px;
+        color: var(--text-2);
+        max-width: 46ch;
+      }
+      .actions {
+        margin-top: 26px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .badges {
+        margin-top: 22px;
+        display: flex;
+        gap: 14px;
+        color: var(--text-muted);
+        font-size: 12px;
+      }
+      .badges span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .badges span::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--success);
+        display: inline-block;
+      }
+      .shot {
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+        background: var(--panel);
+        overflow: hidden;
+      }
+      .shot img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      section {
+        padding: 34px 0;
+        border-top: 1px solid var(--border);
+      }
+      h2 {
+        font-size: 26px;
+        letter-spacing: -0.02em;
+        margin-bottom: 18px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 18px;
+      }
+      .card h3 {
+        font-size: 15px;
+        margin-bottom: 6px;
+      }
+      .card p {
+        font-size: 13px;
+        color: var(--text-2);
+      }
+      .num {
+        color: var(--accent);
+        font-weight: 800;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .download {
+        background: linear-gradient(160deg, var(--panel-2), var(--panel));
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 28px;
+        text-align: center;
+      }
+      .download h3 {
+        font-size: 22px;
+        margin-bottom: 6px;
+      }
+      .download p {
+        color: var(--text-2);
+        margin-bottom: 18px;
+        font-size: 14px;
+      }
+      .note {
+        margin-top: 12px;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 24px 0;
+        color: var(--text-muted);
+        font-size: 12px;
+        text-align: center;
+      }
+      code {
+        background: var(--elevated);
+        padding: 2px 6px;
+        border-radius: 5px;
+        font-size: 12px;
+      }
+      @media (max-width: 860px) {
+        .hero {
+          grid-template-columns: 1fr;
+          padding-top: 34px;
+        }
+        h1 {
+          font-size: 32px;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <div class="logo">
+            <span class="logo-dot">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 64 64"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  fill="url(#g)"
+                  d="M32 8c-9 11.5-15 19.6-15 28a15 15 0 0 0 30 0c0-8.4-6-16.5-15-28z"
+                />
+                <defs>
+                  <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#ffffff" />
+                    <stop offset="1" stop-color="#dcd6ff" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
+            InkFlow
+          </div>
+          <a class="btn" href="#download">Download</a>
+        </nav>
       </div>
-      <a class="btn" href="#download">Download</a>
-    </nav>
-  </div>
-</header>
+    </header>
 
-<main class="container">
+    <main class="container">
+      <section class="hero">
+        <div>
+          <h1>Real pen, <span class="accent">digital paper.</span></h1>
+          <p class="lead">
+            InkFlow is an offline handwriting, drawing and note-taking app built
+            for graphics tablets and styluses. Pressure-sensitive ink, beautiful
+            page templates, PDF annotation, full notebooks — all stored locally,
+            all yours.
+          </p>
+          <div class="actions">
+            <a class="btn" href="#download">Download for Windows</a>
+            <a class="btn secondary" href="#features">See features</a>
+          </div>
+          <div class="badges">
+            <span>Fully offline</span>
+            <span>Pressure-sensitive ink</span>
+            <span>GPL-licensed source</span>
+          </div>
+        </div>
+        <div class="shot">
+          <img
+            src="screenshot.png"
+            alt="InkFlow — notebook with a pen stroke on a ruled page"
+          />
+        </div>
+      </section>
 
-  <section class="hero">
-    <div>
-      <h1>Real pen, <span class="accent">digital paper.</span></h1>
-      <p class="lead">
-        InkFlow is an offline handwriting, drawing and note-taking app built for graphics tablets and styluses.
-        Pressure-sensitive ink, beautiful page templates, PDF annotation, full notebooks — all stored locally, all yours.
-      </p>
-      <div class="actions">
-        <a class="btn" href="#download">Download for Windows</a>
-        <a class="btn secondary" href="#features">See features</a>
-      </div>
-      <div class="badges">
-        <span>Fully offline</span>
-        <span>Pressure-sensitive ink</span>
-        <span>GPL-licensed source</span>
-      </div>
-    </div>
-    <div class="shot">
-      <img src="screenshot.jpeg" alt="InkFlow — notebook with a pen stroke on a ruled page" />
-    </div>
-  </section>
+      <section id="features">
+        <h2>Everything, kept simple</h2>
+        <div class="grid">
+          <div class="card">
+            <div class="num">Ink</div>
+            <h3>Pressure-sensitive writing</h3>
+            <p>
+              Pen, pencil, highlighter with multiply blend, erasers that trim
+              strokes or delete them whole, shapes &amp; arrows — smoothed with
+              quadratic curves, coalesced pointer events and tilt support.
+            </p>
+          </div>
+          <div class="card">
+            <div class="num">Notes</div>
+            <h3>Real notebooks</h3>
+            <p>
+              Notebooks, folders, tags, favorites, duplicate, archive and
+              search. Multiple pages per note with page rail navigation and
+              thumbnails.
+            </p>
+          </div>
+          <div class="card">
+            <div class="num">Pages</div>
+            <h3>Professional page templates</h3>
+            <p>
+              Blank, ruled, grid, dotted, Cornell and Planner — with adjustable
+              spacing and background color. Or annotate existing PDFs without
+              touching the original.
+            </p>
+          </div>
+          <div class="card">
+            <div class="num">Safety</div>
+            <h3>Crash-safe autosave</h3>
+            <p>
+              Every stroke is gzip-compressed into a single atomic payload per
+              page. A write-ahead journal replays interrupted saves on next
+              launch — your notes never vanish.
+            </p>
+          </div>
+          <div class="card">
+            <div class="num">Export</div>
+            <h3>Your ink, everywhere</h3>
+            <p>
+              Export any page or whole note as PNG, SVG (vector) or PDF.
+              Annotate a PDF? Export a new PDF with the ink baked in as vector
+              paths — the original is untouched.
+            </p>
+          </div>
+          <div class="card">
+            <div class="num">Interfaces</div>
+            <h3>Three ways to see InkFlow</h3>
+            <p>
+              Switch between Simple, Advanced or Custom toolbar layouts from the
+              top bar. Simple = pen + eraser + colors, Perfect for kids. Pick
+              exactly what each mode shows.
+            </p>
+          </div>
+        </div>
+      </section>
 
-  <section id="features">
-    <h2>Everything, kept simple</h2>
-    <div class="grid">
-      <div class="card"><div class="num">Ink</div><h3>Pressure-sensitive writing</h3><p>Pen, pencil, highlighter with multiply blend, erasers that trim strokes or delete them whole, shapes &amp; arrows — smoothed with quadratic curves, coalesced pointer events and tilt support.</p></div>
-      <div class="card"><div class="num">Notes</div><h3>Real notebooks</h3><p>Notebooks, folders, tags, favorites, duplicate, archive and search. Multiple pages per note with page rail navigation and thumbnails.</p></div>
-      <div class="card"><div class="num">Pages</div><h3>Professional page templates</h3><p>Blank, ruled, grid, dotted, Cornell and Planner — with adjustable spacing and background color. Or annotate existing PDFs without touching the original.</p></div>
-      <div class="card"><div class="num">Safety</div><h3>Crash-safe autosave</h3><p>Every stroke is gzip-compressed into a single atomic payload per page. A write-ahead journal replays interrupted saves on next launch — your notes never vanish.</p></div>
-      <div class="card"><div class="num">Export</div><h3>Your ink, everywhere</h3><p>Export any page or whole note as PNG, SVG (vector) or PDF. Annotate a PDF? Export a new PDF with the ink baked in as vector paths — the original is untouched.</p></div>
-      <div class="card"><div class="num">Interfaces</div><h3>Three ways to see InkFlow</h3><p>Switch between Simple, Advanced or Custom toolbar layouts from the top bar. Simple = pen + eraser + colors, Perfect for kids. Pick exactly what each mode shows.</p></div>
-    </div>
-  </section>
+      <section class="download" id="download">
+        <h3>Try InkFlow</h3>
+        <p>
+          Download the portable build — one file, no install, works offline
+          forever.
+        </p>
+        <a
+          class="btn"
+          id="dl-button"
+          href="https://github.com/InkFlow/inkflow/releases/latest"
+          >Download InkFlow.zip</a
+        >
+        <div class="note">
+          Windows 10/11 · portable · local storage only · not affiliated with
+          Microsoft · verify SHA-256 after download
+        </div>
+      </section>
 
-  <section class="download" id="download">
-    <h3>Try InkFlow</h3>
-    <p>Download the portable build — one file, no install, works offline forever.</p>
-    <a class="btn" id="dl-button" href="https://github.com/InkFlow/inkflow/releases/latest">Download InkFlow.zip</a>
-    <div class="note">Windows 10/11 · portable · local storage only · not affiliated with Microsoft · verify SHA-256 after download</div>
-  </section>
+      <section>
+        <h2>How to install the portable build</h2>
+        <ol style="color: var(--text-2); padding-left: 20px; line-height: 2">
+          <li>Download and unzip <code>InkFlow-Portable.zip</code>.</li>
+          <li>
+            Open <code>InkFlow.html</code> in Microsoft Edge or Google Chrome.
+          </li>
+          <li>
+            For an app-like window: browser menu →
+            <em>Apps / Install InkFlow…</em>
+          </li>
+          <li>
+            For stylus pressure: open via
+            <code>edge --app=file:///path/to/InkFlow.html</code> or
+            <em>Install</em> from the menu — then every stroke remembers how
+            hard you pressed.
+          </li>
+        </ol>
+      </section>
+    </main>
 
-  <section>
-    <h2>How to install the portable build</h2>
-    <ol style="color:var(--text-2); padding-left:20px; line-height:2">
-      <li>Download and unzip <code>InkFlow-Portable.zip</code>.</li>
-      <li>Open <code>InkFlow.html</code> in Microsoft Edge or Google Chrome.</li>
-      <li>For an app-like window: browser menu → <em>Apps / Install InkFlow…</em></li>
-      <li>For stylus pressure: open via <code>edge --app=file:///path/to/InkFlow.html</code> or <em>Install</em> from the menu — then every stroke remembers how hard you pressed.</li>
-    </ol>
-  </section>
-
-</main>
-
-<footer>InkFlow — MIT-licensed open source · <a href="https://github.com/InkFlow/inkflow">Source on GitHub</a> · Your notes never leave your device.</footer>
-</body>
+    <footer>
+      InkFlow — MIT-licensed open source ·
+      <a href="https://github.com/InkFlow/inkflow">Source on GitHub</a> · Your
+      notes never leave your device.
+    </footer>
+  </body>
 </html>
