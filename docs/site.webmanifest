@@ -1,0 +1,16 @@
+{
+  "name": "InkFlow",
+  "short_name": "InkFlow",
+  "description": "Professional offline digital handwriting and note-taking studio for graphics tablets and styluses.",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#16141f",
+  "theme_color": "#16141f",
+  "dir": "auto",
+  "lang": "en",
+  "categories": ["productivity", "education", "utilities"],
+  "icons": [
+    { "src": "favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any maskable" }
+  ]
+}
