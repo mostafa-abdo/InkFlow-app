@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+/* InkFlow design system — CSS custom properties driven theming.
+   Toggle by setting data-theme="light" | "dark" on <html>. */
+
+:root,
+[data-theme='dark'] {
+  --bg-app: #16141f;
+  --bg-panel: #1c1a28;
+  --bg-panel-2: #221f30;
+  --bg-elevated: #262335;
+  --bg-hover: #2e2b40;
+  --bg-active: #37334e;
+  --border: #2e2b40;
+  --border-strong: #3f3c58;
+  --text-primary: #eceaf4;
+  --text-secondary: #a9a6bd;
+  --text-muted: #716e88;
+  --accent: #7c6cf6;
+  --accent-hover: #8f81f8;
+  --accent-soft: rgba(124, 108, 246, 0.16);
+  --accent-contrast: #ffffff;
+  --danger: #f0655a;
+  --danger-soft: rgba(240, 101, 90, 0.14);
+  --success: #3ecf8e;
+  --warning: #f5c26b;
+  --paper-shadow: 0 18px 50px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.4);
+  --stage: #12101a;
+  --scroll-thumb: #3a374e;
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  --bg-app: #f2f1f6;
+  --bg-panel: #fbfafc;
+  --bg-panel-2: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-hover: #eceaf1;
+  --bg-active: #e0dde9;
+  --border: #e2e0ea;
+  --border-strong: #ccc9d8;
+  --text-primary: #23212e;
+  --text-secondary: #5f5c70;
+  --text-muted: #9a97ab;
+  --accent: #5b4ee6;
+  --accent-hover: #6d62ee;
+  --accent-soft: rgba(91, 78, 230, 0.12);
+  --accent-contrast: #ffffff;
+  --danger: #d64541;
+  --danger-soft: rgba(214, 69, 65, 0.12);
+  --success: #12996a;
+  --warning: #b97e10;
+  --paper-shadow: 0 18px 45px rgba(35, 33, 46, 0.22), 0 2px 6px rgba(35, 33, 46, 0.12);
+  --stage: #e6e5ec;
+  --scroll-thumb: #cfcddc;
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--bg-app);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  user-select: none;
+  overscroll-behavior: none;
+}
+
+canvas {
+  touch-action: none;
+  -webkit-user-select: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.inkflow-input {
+  background: var(--bg-panel-2);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.inkflow-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.fade-in {
+  animation: fadeIn 0.18s ease both;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.kbd {
+  font-family: ui-monospace, "Cascadia Mono", monospace;
+  font-size: 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 1px 5px;
+  color: var(--text-secondary);
+}
