@@ -4,8 +4,8 @@
 InkFlow pairs a high-performance, pressure-aware drawing engine with structured notebook management,
 PDF annotation and fully offline storage — as a Tauri desktop app (React + TypeScript + Rust).
 
-> **Download the latest portable build: [Releases](https://github.com/InkFlow/inkflow/releases/latest)**
-> or view it online: [inkflow.github.io/inkflow](https://inkflow.github.io/inkflow)
+> **Download the latest portable build: [Releases](https://github.com/mostafa-abdo/InkFlow-app/releases/latest)**
+> or view it online: [mostafa-abdo.github.io/InkFlow-app](https://mostafa-abdo.github.io/InkFlow-app/)
 
 ![stack](https://img.shields.io/badge/stack-React%2019%20%C2%B7%20TypeScript%20%C2%B7%20Vite%20%C2%B7%20Tauri%202%20%C2%B7%20SQLite-7c6cf6)
 
